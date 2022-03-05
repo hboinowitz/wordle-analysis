@@ -1,11 +1,11 @@
 # Wordle-Analysis
-There has been a big hype around the NY Times' word guessing game wordle recently.
+There has been a lot of buzz lately about the NY Times [wordle](https://www.nytimes.com/games/wordle/index.html) guessing game.
 
 In this repo I investigated how wordle works from a Data Scientific point of view by 
 - some Explorative Data Analysis (EDA), researching if the length of the words (5 letters) has an impact how 'solvable' the wordle is theoretically 
 - a simulation, in which a computer solves wordles
 - interpreting and visualizing the simulation results
-- showing a live-simulation in a dashboard app with the wordle design
+- showing a live-simulation in a demo app with the wordle design
 
 ## Installation
 1. Clone the repo
