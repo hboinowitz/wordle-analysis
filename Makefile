@@ -5,4 +5,4 @@ create_venv:
 	python3 -m venv $(VENV_NAME)
 
 install: create_venv requirements.txt
-	(. $(PATH_TO_ACTIVATE) && pip3 install -r requirements.txt)
+	(. $(PATH_TO_ACTIVATE) && pip3 install -e .)
