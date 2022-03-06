@@ -4,3 +4,4 @@ nltk
 numpy
 pandas
 scipy
+flask

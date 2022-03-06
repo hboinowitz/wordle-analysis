@@ -1,0 +1,27 @@
+h1 {
+    font-family: "Roboto Slab";
+    text-align: center
+}
+
+.header {
+    font-family: "Roboto Slab";
+    text-align: center
+}
+
+.wordle-grid {
+    max-width: 280px;
+    height: 400px;
+    position: relative;
+    padding-top: 2%;
+    left: 40.5%;
+    display: grid; 
+}
+
+.letter {
+    height: 20px;
+    width: 50px;
+    font-family: "Roboto Slab";
+    border: 2px solid black;
+    padding: 20px 0;
+    text-align: center;
+}
