@@ -1,4 +1,5 @@
-from typing import List, Tuple, Set
+from copy import deepcopy
+from typing import Dict, List, Optional, Tuple, Set
 import string
 import pandas as pd
 from nltk.corpus import words
@@ -15,6 +16,10 @@ def initialize_corpus():
 
 def initialize_letterbank():
     return [list(string.ascii_lowercase)] * 5
+
+def initialize_keyboard() -> Dict[str, str]:
+    english_alphabet = list(string.ascii_lowercase)
+    return {letter: 'white' for letter in english_alphabet}
 
 def check_guess(letterbank: List[List[str]], guess: str, correct_word: str) -> List[List[str]]:
     colors = []
@@ -55,22 +60,47 @@ get_yellow_letters = (
     lambda letters_with_colors : [letter for letter, color in letters_with_colors.items() if color == 'yellow']
 )
 
-def simulate() -> Tuple[str, List[str], int, bool]:
-    letterbank = initialize_letterbank()
+def simulate(correct_word: Optional[str] = None, 
+             initial_guess: Optional[str] = None) -> Tuple[str, List[str], int, bool]:
+    
     wordbank = initialize_corpus()
-    correct_word = wordbank.sample(1).reset_index().loc[0,'word']
+    
+    # Check if the user provided valid values for the inital guess and correct word
+    if correct_word and correct_word not in wordbank['word'].values:
+        raise ValueError('The correct word has to be in the corpus')
+    
+    if initial_guess and initial_guess not in wordbank['word'].values:
+        raise ValueError('The initial guess has to be in the corpus')
+
+    letterbank = initialize_letterbank()
+    keyboard = initialize_keyboard()
+
+    if not correct_word:
+        correct_word = wordbank.sample(1).reset_index().loc[0,'word']
     guesses = []
     yellow_letters = set()
+    letterbanks = [deepcopy(letterbank)]
+    keyboards = [deepcopy(keyboard)]
 
     for round in range(6):
-        choices = get_suitable_guesses(letterbank, wordbank, yellow_letters)
-        guess = np.random.choice(choices)
-        guesses.append(guess)
+        if round == 0 and initial_guess:
+            guess = initial_guess
+            guesses.append(guess)
+        else:
+            choices = get_suitable_guesses(letterbank, wordbank, yellow_letters)
+            guess = np.random.choice(choices)
+            guesses.append(guess)
+
         letterbank, colors = check_guess(letterbank, guess, correct_word)
         letters_with_colors = dict(zip(list(guess), colors))
+        
+        letterbanks.append(deepcopy(letterbank))
+        keyboard.update(letters_with_colors)
+        keyboards.append(deepcopy(keyboard))
+        
         new_yellow_letters = get_yellow_letters(letters_with_colors)
         yellow_letters.update(set(new_yellow_letters))
         if guess == correct_word:
-            return correct_word, guesses, round + 1, True
+            return correct_word, guesses, round + 1, True, letterbanks, keyboards
 
-    return correct_word, guesses, 6, False
+    return correct_word, guesses, 6, False, letterbanks, keyboards
