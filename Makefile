@@ -8,4 +8,4 @@ install: create_venv requirements.txt
 	(. $(PATH_TO_ACTIVATE) && pip3 install -e .)
 
 run-demo:
-	(. $(PATH_TO_ACTIVATE) && cd demo && flask run)
+	(. $(PATH_TO_ACTIVATE) && cd demo && export FLASK_ENV=development && flask run)
