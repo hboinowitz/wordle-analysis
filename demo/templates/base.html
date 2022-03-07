@@ -5,6 +5,7 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" 
         integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto Slab">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@700&display=swap">
     <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/base.css') }}">
 
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -19,13 +20,32 @@
         {% for guess in guesses %}
             {% set outer_loop = loop %}
             {% for char in guess %}
-                <div class="letter" style = "grid-row: {{ outer_loop.index }}; grid-column: {{ loop.index }}" > 
+                {% if outer_loop.first %}
+                <div class="letter {{ colors_for_guesses[outer_loop.index - 1][loop.index - 1] }} row-{{outer_loop.index}}" style = "grid-row: {{ outer_loop.index }}; grid-column: {{ loop.index }}" > 
                     {{ char.upper() }}
                 </div>
+                {% else %}
+                <div class="letter {{ colors_for_guesses[outer_loop.index - 1][loop.index - 1] }} row-{{outer_loop.index}} background-hidden" style = "grid-row: {{ outer_loop.index }}; grid-column: {{ loop.index }}" > 
+                    {{ char.upper() }}
+                </div>
+                {% endif %}
             {% endfor %}
         {% endfor %}
 
     </div>
+    <div class="nav-panel">
+        <button class="button" onclick="jump_to_start()">&#8676;</button>
+        <button class="button" onclick="prev_step()">◁</button>
+        <button class="button" onclick="next_step()">▷</button>
+       
+        <button class="button" onclick="jump_to_end()">&#8677;</button>
+    
+        <button class="button" onclick="window.location.href='{{url_for('home')}}'">&#8634;
+        </button>
+
+    </div>
+
 
 </body>
+<script src="{{ url_for('static',filename='scripts/script.js') }}"></script>
 </html>
