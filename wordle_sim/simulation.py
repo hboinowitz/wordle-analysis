@@ -22,10 +22,19 @@ def initialize_keyboard() -> Dict[str, str]:
     english_alphabet = list(string.ascii_lowercase)
     return {letter: 'white' for letter in english_alphabet}
 
+def get_num_greens(guess, correct_word):
+    count_greens = defaultdict(int)
+    for index, char_ in enumerate(guess):
+        if char_ == correct_word[index]:
+            count_greens[char_] += 1
+    return count_greens
+
 def check_guess(letterbank: List[List[str]], guess: str, correct_word: str) -> List[List[str]]:
     colors = []
     counts_correct_word = Counter(correct_word)
     counts_guess = defaultdict(int)
+    count_greens = get_num_greens(guess, correct_word)
+
     for index, char_ in enumerate(guess):
         counts_guess[char_] += 1
         if char_ == correct_word[index]:
@@ -35,7 +44,7 @@ def check_guess(letterbank: List[List[str]], guess: str, correct_word: str) -> L
             buffer = letterbank[index][:]
             buffer.remove(char_)
             letterbank[index] = buffer
-            if counts_correct_word[char_] >= counts_guess[char_]:
+            if counts_correct_word[char_] >= counts_guess[char_] + count_greens[char_]:
                 colors.append('yellow')
             else:
                 colors.append('grey')
@@ -85,6 +94,7 @@ def simulate(correct_word: Optional[str] = None,
     if not correct_word:
         correct_word = wordbank.sample(1).reset_index().loc[0,'word']
     guesses = []
+    colors_for_simulation = []
     yellow_letters = set()
     letterbanks = [deepcopy(letterbank)]
     keyboards = [deepcopy(keyboard)]
@@ -104,10 +114,11 @@ def simulate(correct_word: Optional[str] = None,
         letterbanks.append(deepcopy(letterbank))
         keyboard.update(letters_with_colors)
         keyboards.append(deepcopy(keyboard))
+        colors_for_simulation.append(deepcopy(colors))
         
         new_yellow_letters = get_yellow_letters(letters_with_colors)
         yellow_letters.update(set(new_yellow_letters))
         if guess == correct_word:
-            return correct_word, guesses, round + 1, True, letterbanks, keyboards
+            return correct_word, guesses, round + 1, True, letterbanks, keyboards, colors_for_simulation
 
-    return correct_word, guesses, 6, False, letterbanks, keyboards
+    return correct_word, guesses, 6, False, letterbanks, keyboards, colors_for_simulation
