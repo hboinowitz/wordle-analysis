@@ -4,6 +4,7 @@ import string
 import pandas as pd
 from nltk.corpus import words
 import numpy as np
+from collections import Counter, defaultdict
 
 def initialize_corpus():
     words_pd = pd.DataFrame()
@@ -23,7 +24,10 @@ def initialize_keyboard() -> Dict[str, str]:
 
 def check_guess(letterbank: List[List[str]], guess: str, correct_word: str) -> List[List[str]]:
     colors = []
+    counts_correct_word = Counter(correct_word)
+    counts_guess = defaultdict(int)
     for index, char_ in enumerate(guess):
+        counts_guess[char_] += 1
         if char_ == correct_word[index]:
             letterbank[index] = [char_]
             colors.append('green')
@@ -31,7 +35,10 @@ def check_guess(letterbank: List[List[str]], guess: str, correct_word: str) -> L
             buffer = letterbank[index][:]
             buffer.remove(char_)
             letterbank[index] = buffer
-            colors.append('yellow')
+            if counts_correct_word[char_] >= counts_guess[char_]:
+                colors.append('yellow')
+            else:
+                colors.append('grey')
         else:
             for i in range(len(guess)):
                 if char_ not in letterbank[i][:]:
