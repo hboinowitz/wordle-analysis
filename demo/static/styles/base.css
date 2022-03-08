@@ -13,7 +13,7 @@ h1 {
     height: 400px;
     position: relative;
     padding-top: 2%;
-    left: 40.5%;
+    left: 42%;
     display: grid; 
 }
 
@@ -54,8 +54,8 @@ h1 {
 }
 
 .button {
-    height: 50px;
-    width: 50px;
+    min-height: 50px;
+    min-width: 50px;
     font-size: 25px;
     border: none;
     background-color: #4e618d;
@@ -64,6 +64,26 @@ h1 {
 
 .nav-panel{
     position: relative;
-    left: 41%;
+    left: 42%;
     padding-top: 2%
+}
+input[type=text] {
+    border: 2px solid #d3d6da;
+    font-size: 15pt;
+    font-family: 'Roboto Slab';
+    text-transform: uppercase;
+}
+
+.inputs {
+    font-family: 'Roboto Slab';
+    font-size: 15pt;
+}
+
+.initialization-form {
+    height: 40%;
+    max-width: 20%;
+    position: relative;
+    padding: 5%;
+    left: 36%;
+    background-color: #4e618d75;
 }
