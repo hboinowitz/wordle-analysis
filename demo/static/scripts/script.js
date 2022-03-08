@@ -36,3 +36,12 @@ function jump_to_start() {
         prev_step()
     }
 }
+
+function send_post_request(url, correct_word, initial_guess) {
+    var form = $('<form action="' + url + '" method="post">' +
+    '<input type="text" name="correct_word" value="' + correct_word + '" />' +
+    '<input type="text" name="initial_guess" value="' + initial_guess + '" />' +
+    '</form>');
+    $('body').append(form);
+    form.submit();
+}

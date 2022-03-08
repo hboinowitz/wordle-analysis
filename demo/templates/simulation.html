@@ -39,9 +39,11 @@
         <button class="button" onclick="next_step()">▷</button>
        
         <button class="button" onclick="jump_to_end()">&#8677;</button>
-    
-        <button class="button" onclick="window.location.href='{{url_for('home')}}'">&#8634;
+        <button class="button" onclick="send_post_request('{{url_for('simulation')}}', '{{correct_word}}', '{{guesses[0]}}')">&#8634;
         </button>
+        <br><br>
+        <button class="button" onclick="window.location.href ='{{url_for('home')}}'">🏡</button>
+
 
     </div>
 
