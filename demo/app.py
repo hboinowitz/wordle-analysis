@@ -21,14 +21,13 @@ def simulation():
     initial_guess = None
     if request.method == 'POST':
         correct_word = request.form['correct_word'].lower()
-        initial_guess = request.form['inital_guess'].lower()
+        initial_guess = request.form['initial_guess'].lower()
     correct_word, guesses, rounds, won, letterbanks, keyboards = simulate(correct_word, initial_guess)
     colors_for_guesses = get_colors_for_guesses(guesses, keyboards)
     len_guesses_prior = len(guesses)
     if len_guesses_prior != 6:
         guesses.extend([[" "] * 5] * (6 - len_guesses_prior))
         colors_for_guesses.extend([["white"] * 5] * (6 - len_guesses_prior))
-    print(colors_for_guesses, len(guesses))
 
     return render_template('simulation.html', guesses = guesses, correct_word = correct_word,
                            colors_for_guesses=colors_for_guesses)
