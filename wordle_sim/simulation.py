@@ -35,6 +35,14 @@ def check_guess(letterbank: List[List[str]], guess: str, correct_word: str) -> L
     counts_guess = defaultdict(int)
     count_greens = get_num_greens(guess, correct_word)
 
+    # Clean-up in case a green and a grey multi-occuring letter are in the same word
+    for char_ in set(guess):
+        if count_greens[char_] == counts_correct_word[char_] and counts_guess[char_] > counts_correct_word[char_]:
+            for i in range(len(guess)):
+                if char_ not in letterbank[i][:] or char_ == guess[i]:
+                    continue
+                letterbank[i].remove(char_)
+    
     for index, char_ in enumerate(guess):
         counts_guess[char_] += 1
         if char_ == correct_word[index]:
