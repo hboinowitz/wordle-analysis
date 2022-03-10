@@ -1,7 +1,9 @@
 ipykernel
+ipywidgets
 matplotlib
 nltk
 numpy
 pandas
 scipy
+tqdm
 flask
