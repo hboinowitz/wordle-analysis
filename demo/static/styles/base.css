@@ -13,7 +13,8 @@ h1 {
     height: 400px;
     position: relative;
     padding-top: 2%;
-    left: 42%;
+    margin-left: auto;
+    margin-right: auto;
     display: grid; 
 }
 
@@ -63,9 +64,11 @@ h1 {
 }
 
 .nav-panel{
-    position: relative;
-    left: 42%;
-    padding-top: 2%
+    display: block;
+    padding-top: 2%;
+    margin-left: auto;
+    margin-right: auto;
+    width: fit-content;
 }
 input[type=text] {
     border: 2px solid #d3d6da;
@@ -84,6 +87,7 @@ input[type=text] {
     max-width: 20%;
     position: relative;
     padding: 5%;
-    left: 36%;
+    margin-left: auto;
+    margin-right: auto;
     background-color: #4e618d75;
 }
