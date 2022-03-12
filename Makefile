@@ -9,3 +9,6 @@ install: create_venv requirements.txt
 
 run-demo:
 	(. $(PATH_TO_ACTIVATE) && cd demo && export FLASK_ENV=development && flask run)
+
+black-style:
+	(. $(PATH_TO_ACTIVATE) && black wordle_sim)

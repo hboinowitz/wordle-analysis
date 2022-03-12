@@ -1,3 +1,4 @@
+black
 ipykernel
 ipywidgets
 matplotlib
